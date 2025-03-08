@@ -40,15 +40,15 @@ int main(){
     Slider animSlider(10, 670, "Anim. Speed");
     animSlider.setRange(0.f, 5.f);
     animSlider.setSliderValue(1.5f);
+    float animationSpeed{1.5f};
     
     planet.velocity = {std::cosf(initAngle * DEG2RAD) * initVel, -std::sinf(initAngle * DEG2RAD) * initVel};
 
-    float minVel = 0.f;
-    float maxVel = 0.f;
-    float minDist = 0.f;
-    float maxDist = 0.f;
+    float minVel = 3.5f;
+    float maxVel = 3.5f;
+    float minDist = Vector2Distance(planet.getPosition(), center);
+    float maxDist = minDist;
 
-    float animationSpeed{1.f};
 
     const int TRACES_SIZE{1200};
     Vector2 traces[TRACES_SIZE];
@@ -60,7 +60,7 @@ int main(){
     
     bool isTracing{true};
     bool isRunning{false};
-    bool showHelp(false);
+    bool showHelp(true);
 
     while (!WindowShouldClose()){
 
@@ -157,14 +157,14 @@ int main(){
         
         // draw help screen:
         if (showHelp) {
-            DrawRectangle(center.x - 80, center.y - 60, 160, 120, BLACK);
-            DrawRectangleLines(center.x - 80, center.y - 60, 160, 120, WHITE);
+            DrawRectangle(center.x - 80, center.y - 60, 160, 140, BLACK);
+            DrawRectangleLines(center.x - 80, center.y - 60, 160, 140, WHITE);
             DrawTextEx(font16, "'G': go/stop", Vector2{center.x - 65, center.y - 50}, 16, 0.f, LIGHTGRAY);
             DrawTextEx(font16, "'R': reset", Vector2{center.x - 65, center.y - 30}, 16, 0.f, LIGHTGRAY);
             DrawTextEx(font16, "'T': trace orbit", Vector2{center.x - 65, center.y - 10}, 16, 0.f, LIGHTGRAY);
             DrawTextEx(font16, "'C': clear traces", Vector2{center.x - 65, center.y + 10}, 16, 0.f, LIGHTGRAY);
-            DrawTextEx(font16, "drag planet for new start", Vector2{center.x - 65, center.y + 30}, 16, 0.f, LIGHTGRAY);
-        }
+            DrawTextEx(font16, "'?': this help screen", Vector2{center.x - 65, center.y + 30}, 16, 0.f, LIGHTGRAY);
+            DrawTextEx(font16, "drag planet for new start", Vector2{center.x - 65, center.y + 50}, 16, 0.f, LIGHTGRAY);        }
 
         EndDrawing();
     }
