@@ -175,9 +175,9 @@ int main(){
 
 // web compilation:
 
-// em++ -o game.html main.cpp Slider.cpp -Os -Wall -I ~/dev/emsdk/upstream/emscripten/cache/sysroot/include \
+// em++ -o game.html src/main.cpp src/Slider.cpp -Os -Wall -I ~/dev/emsdk/upstream/emscripten/cache/sysroot/include \
 -L ~/dev/emsdk/upstream/emscripten/cache/sysroot/lib/libraylib.a -s USE_GLFW=3 -s ASYNCIFY --preload-file resources \
---shell-file shell.html -DPLATFORM_WEB ~/dev/emsdk/upstream/emscripten/cache/sysroot/lib/libraylib.a
+--shell-file minshell.html -DPLATFORM_WEB ~/dev/emsdk/upstream/emscripten/cache/sysroot/lib/libraylib.a
 //
 
 // to run:
