@@ -139,16 +139,16 @@ int main(){
         animSlider.draw();
 
         // display measurements:
-        DrawTextEx(font16, TextFormat("Vel: %.2f", Vector2Length(planet.velocity)), Vector2{920, 10}, 16, 0.f, LIGHTGRAY); // vel
-        DrawTextEx(font16, TextFormat("Min / Max: %.2f / %.2f", minVel, maxVel), Vector2{995, 10}, 16, 0.f, LIGHTGRAY); // min/max vel
-        DrawTextEx(font16, TextFormat("Dist: %.2f", Vector2Length(planet.getPosition() - center)), Vector2{920, 30}, 16, 0.f, LIGHTGRAY); // dist
-        DrawTextEx(font16, TextFormat("Min / Max: %.2f / %.2f", minDist, maxDist), Vector2{995, 30}, 16, 0.f, LIGHTGRAY); // min/max dist
-        DrawTextEx(font16, TextFormat("Current Pos: (%03d, %03d)",  int(planet.getPosition().x), int(planet.getPosition().y)), Vector2{920, 50}, 16, 0.f, LIGHTGRAY);
-        DrawTextEx(font16, TextFormat("Start Pos: (%03d, %03d)",  int(planet.startPoint.x), int(planet.startPoint.y)), Vector2{920, 70}, 16, 0.f, LIGHTGRAY);
+        DrawTextEx(font16, TextFormat("Vel: %.2f", Vector2Length(planet.velocity)), Vector2{920, 10}, 16, 0.8f, WHITE); // vel
+        DrawTextEx(font16, TextFormat("Min / Max: %.2f / %.2f", minVel, maxVel), Vector2{995, 10}, 16, 0.8f, WHITE); // min/max vel
+        DrawTextEx(font16, TextFormat("Dist: %.2f", Vector2Length(planet.getPosition() - center)), Vector2{920, 30}, 16, 0.8f, WHITE); // dist
+        DrawTextEx(font16, TextFormat("Min / Max: %.2f / %.2f", minDist, maxDist), Vector2{995, 30}, 16, 0.8f, WHITE); // min/max dist
+        DrawTextEx(font16, TextFormat("Current Pos: (%03d, %03d)",  int(planet.getPosition().x), int(planet.getPosition().y)), Vector2{920, 50}, 16, 0.8f, WHITE);
+        DrawTextEx(font16, TextFormat("Start Pos: (%03d, %03d)",  int(planet.startPoint.x), int(planet.startPoint.y)), Vector2{920, 70}, 16, 0.8f, WHITE);
 
         // draw axes:
-        DrawLineEx(Vector2{0, height/2}, Vector2{width, height/2}, 1.f, LIGHTGRAY);
-        DrawLineEx(Vector2{width/2, 0}, Vector2{width/2, height}, 1.f, LIGHTGRAY);
+        DrawLineEx(Vector2{0, height/2}, Vector2{width, height/2}, 1.f, WHITE);
+        DrawLineEx(Vector2{width/2, 0}, Vector2{width/2, height}, 1.f, WHITE);
 
         // draw bodies:
         cof.draw();
@@ -157,14 +157,14 @@ int main(){
         
         // draw help screen:
         if (showHelp) {
-            DrawRectangle(center.x - 80, center.y - 60, 160, 140, BLACK);
-            DrawRectangleLines(center.x - 80, center.y - 60, 160, 140, WHITE);
-            DrawTextEx(font16, "'G': go/stop", Vector2{center.x - 65, center.y - 50}, 16, 0.f, LIGHTGRAY);
-            DrawTextEx(font16, "'R': reset", Vector2{center.x - 65, center.y - 30}, 16, 0.f, LIGHTGRAY);
-            DrawTextEx(font16, "'T': trace orbit", Vector2{center.x - 65, center.y - 10}, 16, 0.f, LIGHTGRAY);
-            DrawTextEx(font16, "'C': clear traces", Vector2{center.x - 65, center.y + 10}, 16, 0.f, LIGHTGRAY);
-            DrawTextEx(font16, "'?': this help screen", Vector2{center.x - 65, center.y + 30}, 16, 0.f, LIGHTGRAY);
-            DrawTextEx(font16, "drag planet for new start", Vector2{center.x - 65, center.y + 50}, 16, 0.f, LIGHTGRAY);        }
+            DrawRectangle(center.x - 88, center.y - 60, 176, 140, BLACK);
+            DrawRectangleLines(center.x - 88, center.y - 60, 176, 140, WHITE);
+            DrawTextEx(font16, "'G': go/stop", Vector2{center.x - 75, center.y - 50}, 16, 0.8f, WHITE);
+            DrawTextEx(font16, "'R': reset", Vector2{center.x - 75, center.y - 30}, 16, 0.8f, WHITE);
+            DrawTextEx(font16, "'T': trace orbit", Vector2{center.x - 75, center.y - 10}, 16, 0.8f, WHITE);
+            DrawTextEx(font16, "'C': clear traces", Vector2{center.x - 75, center.y + 10}, 16, 0.8f, WHITE);
+            DrawTextEx(font16, "'?': this help screen", Vector2{center.x - 75, center.y + 30}, 16, 0.8f, WHITE);
+            DrawTextEx(font16, "drag planet for new start", Vector2{center.x - 75, center.y + 50}, 16, 0.8f, WHITE);        }
 
         EndDrawing();
     }

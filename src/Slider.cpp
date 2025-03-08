@@ -106,11 +106,11 @@ void Slider::setName(char * _name)
 void Slider::draw()
 {
 	logic();
-    DrawTextEx(font16, TextFormat("%.2f", minValue), Vector2{float(xCord - 10), float(yCord + sliderHeight)}, 16, 0.f, LIGHTGRAY); // min
+    DrawTextEx(font16, TextFormat("%.2f", minValue), Vector2{float(xCord - 10), float(yCord + sliderHeight)}, 16, .8f, WHITE); // min
     axis.draw();
-    DrawTextEx(font16, TextFormat("%.2f", maxValue), Vector2{float(xCord + axisWidth - 10), float(yCord + sliderHeight)}, 16, 0.f, LIGHTGRAY); // max
-    slider.draw(LIGHTGRAY);
-    DrawTextEx(font12, TextFormat("%.2f", sliderValue), Vector2{slider.x, float(yCord - 10)}, 12, 0.f, LIGHTGRAY); // value
-	DrawTextEx(font16, TextFormat("%s", name), Vector2{float(xCord + axisWidth + 5), float(yCord)}, 16, 0.f, LIGHTGRAY); // name
+    DrawTextEx(font16, TextFormat("%.2f", maxValue), Vector2{float(xCord + axisWidth - 10), float(yCord + sliderHeight)}, 16, .8f, WHITE); // max
+    slider.draw(WHITE);
+    DrawTextEx(font12, TextFormat("%.2f", sliderValue), Vector2{slider.x, float(yCord - 10)}, 12, .6f, WHITE); // value
+	DrawTextEx(font16, TextFormat("%s", name), Vector2{float(xCord + axisWidth + 5), float(yCord)}, 16, .8f, WHITE); // name
 	
 }
