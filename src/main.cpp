@@ -92,22 +92,28 @@ int main(){
         
         // run sim:
         if (isRunning) {
+            // inputs
             animationSpeed = animSlider.getSliderValue();
-            planet.setPosition(planet.getPosition() + planet.velocity * animationSpeed);
-            Vector2 centripetalDir = (center - planet.getPosition());
-            float distance = Vector2Length(centripetalDir);
-            centripetalDir /= distance;
-            float force = forceSlider.sliderValue;
-            float impulse = animationSpeed * force / std::pow(distance, 2);
-            planet.velocity += centripetalDir * impulse;
-
+            float force = forceSlider.sliderValue; // 
+            float distance;
+            const int divisor = 5;
+            for (int i = 0; i < divisor; i++) {
+                // advance planet
+                planet.setPosition(planet.getPosition() + planet.velocity * animationSpeed / divisor);
+                // calculate and apply force
+                Vector2 centripetalDir = (center - planet.getPosition()); // whither the center
+                distance = Vector2Length(centripetalDir); // how far
+                centripetalDir /= distance; // normalize vector
+                float impulse = animationSpeed * force / (std::pow(distance, 2) * divisor); // how strong a push?
+                planet.velocity += centripetalDir * impulse; // apply push
+            }
+            // update readouts
             direction.velAngle = std::atan2(-planet.velocity.y, planet.velocity.x) * RAD2DEG;
             if (distance > maxDist) { maxDist = distance; }
             if (distance < minDist) { minDist = distance; }
             float velMag = Vector2Length(planet.velocity);
             if (velMag > maxVel) { maxVel = velMag; }
             if (velMag < minVel) { minVel = velMag; }
-            // accelerate
         }
         
         // drawing:
