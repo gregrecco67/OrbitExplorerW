@@ -23,7 +23,7 @@ Slider::Slider(int x, int y)
     slider.width = sliderWidth;
 }
 
-Slider::Slider(int x, int y, char* _name) : name(_name) {
+Slider::Slider(int x, int y, const char* _name) : name(_name) {
     for (int i=32; i<128; i++) { codepoints.push_back(i); }
     font16 = LoadFontEx("resources/arial.ttf", 16, &codepoints[0], int(codepoints.size()));
     font12 = LoadFontEx("resources/arial.ttf", 12, &codepoints[0], int(codepoints.size()));
@@ -94,6 +94,7 @@ void Slider::setSliderValue(float newValue)
 		posX += xCord;
 		slider.x = posX;
         slider.y = yCord;
+		axis.y = yCord + sliderHeight/2.f - axisHeight/2.f;
 	}
 }
 

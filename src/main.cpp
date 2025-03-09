@@ -3,6 +3,8 @@
 #include "Planet.h"
 #include "Slider.h"
 #include "Direction.h"
+#include <iostream>
+#include <format>
 
 
 int main(){
@@ -14,8 +16,8 @@ int main(){
     Font font16 = LoadFontEx("resources/arial.ttf", 16, &codepoints[0], int(codepoints.size()));
 
     // window:
-    float height = GetScreenHeight();
-    float width = GetScreenWidth();
+    int height = GetScreenHeight();
+    int width = GetScreenWidth();
     Vector2 center = {width/2.f, height/2.f}; 
 
     Planet planet{Vector2{320, 372}};
@@ -23,7 +25,7 @@ int main(){
     
     Circle cof;
     cof.fillColor = YELLOW;
-    cof.position = Vector2{width/2, height/2};
+    cof.position = Vector2{width/2.f, height/2.f};
     cof.radius = 20;
     
     Slider forceSlider(10, 10, "Force");
@@ -64,8 +66,11 @@ int main(){
     bool showHelp(true);
 
     while (!WindowShouldClose()){
-
+        
         // poll input:
+        if (IsKeyReleased(KEY_F)) {
+            ToggleBorderlessWindowed();
+        }
         if (IsKeyReleased(KEY_G)) { isRunning = !isRunning; } // 'G': go/stop
         if (IsKeyReleased(KEY_R)) { // 'R': reset planet to start position/velocity
             planet.setPosition(planet.startPoint);
@@ -85,6 +90,17 @@ int main(){
         if (IsKeyReleased(KEY_SLASH)) {
             if (isRunning) { isRunning = false; }
             showHelp = !showHelp;
+        }
+        // check for resize
+        int newheight = GetScreenHeight();
+        int newwidth = GetScreenWidth();
+        if (newheight != height || newwidth != width) {
+            width = newwidth;
+            height = newheight;
+            Vector2 currentPlanetVectorToCenter = center - planet.getPosition();
+            center = {width/2.f, height/2.f};
+            cof.position = center;
+            planet.setPosition(center - currentPlanetVectorToCenter);
         }
         
         // read controls:
@@ -138,23 +154,30 @@ int main(){
                     DrawPixelV(traces[i], WHITE);
             }
         }
+
         forceSlider.draw();
         velSlider.draw();
         dirSlider.draw();
         direction.draw();
+        animSlider.yCord = height - 85;
+        animSlider.setSliderValue(animSlider.getSliderValue());
         animSlider.draw();
 
         // display measurements:
-        DrawTextEx(font16, TextFormat("Vel: %.2f", Vector2Length(planet.velocity)), Vector2{910, 10}, 16, 0.8f, WHITE); // vel
-        DrawTextEx(font16, TextFormat("Min / Max: %.2f / %.2f", minVel, maxVel), Vector2{995, 10}, 16, 0.8f, WHITE); // min/max vel
-        DrawTextEx(font16, TextFormat("Dist: %.2f", Vector2Length(planet.getPosition() - center)), Vector2{910, 30}, 16, 0.8f, WHITE); // dist
-        DrawTextEx(font16, TextFormat("Min / Max: %.2f / %.2f", minDist, maxDist), Vector2{995, 30}, 16, 0.8f, WHITE); // min/max dist
-        DrawTextEx(font16, TextFormat("Current Pos: (%03d, %03d)",  int(planet.getPosition().x), int(planet.getPosition().y)), Vector2{910, 50}, 16, 0.8f, WHITE);
-        DrawTextEx(font16, TextFormat("Start Pos: (%03d, %03d)",  int(planet.startPoint.x), int(planet.startPoint.y)), Vector2{910, 70}, 16, 0.8f, WHITE);
+        float left = width - 235;
+        float right = width - 150;
+        DrawTextEx(font16, TextFormat("Vel: %.2f", Vector2Length(planet.velocity)), Vector2{left, 10}, 16, 0.8f, WHITE); // vel
+        DrawTextEx(font16, TextFormat("Min / Max: %.2f / %.2f", minVel, maxVel), Vector2{right, 10}, 16, 0.8f, WHITE); // min/max vel
+        DrawTextEx(font16, TextFormat("Dist: %.2f", Vector2Length(planet.getPosition() - center)), Vector2{left, 30}, 16, 0.8f, WHITE); // dist
+        DrawTextEx(font16, TextFormat("Min / Max: %.2f / %.2f", minDist, maxDist), Vector2{right, 30}, 16, 0.8f, WHITE); // min/max dist
+        DrawTextEx(font16, TextFormat("Current Pos: (%03d, %03d)",  int(planet.getPosition().x), int(planet.getPosition().y)), Vector2{left, 50}, 16, 0.8f, WHITE);
+        DrawTextEx(font16, TextFormat("Start Pos: (%03d, %03d)",  int(planet.startPoint.x), int(planet.startPoint.y)), Vector2{left, 70}, 16, 0.8f, WHITE);
 
         // draw axes:
-        DrawLineEx(Vector2{0, height/2}, Vector2{width, height/2}, 1.f, WHITE);
-        DrawLineEx(Vector2{width/2, 0}, Vector2{width/2, height}, 1.f, WHITE);
+        DrawLineEx(Vector2{0, height/2.f}, Vector2{float(width), height/2.f}, 1.f, WHITE);
+        DrawLineEx(Vector2{width/2.f, 0}, Vector2{width/2.f, float(height)}, 1.f, WHITE);
+
+        //DrawTextEx(font16, TextFormat("W/H: %d/%d", newwidth, newheight), Vector2{500, 10}, 16, 0.8f, WHITE); // vel
 
         // draw bodies:
         cof.draw();
@@ -163,8 +186,10 @@ int main(){
         
         // draw help screen:
         if (showHelp) {
-            DrawRectangle(center.x - 88, center.y - 60, 176, 140, BLACK);
-            DrawRectangleLines(center.x - 88, center.y - 60, 176, 140, WHITE);
+            DrawRectangle(center.x - 88, center.y - 80, 176, 160, BLACK);
+            DrawRectangleLines(center.x - 88, center.y - 80, 176, 160, WHITE);
+            //'F': toggle fullscreen
+            DrawTextEx(font16, "'F': toggle fullscreen", Vector2{center.x - 75, center.y - 70}, 16, 0.8f, WHITE);
             DrawTextEx(font16, "'G': go/stop", Vector2{center.x - 75, center.y - 50}, 16, 0.8f, WHITE);
             DrawTextEx(font16, "'R': reset", Vector2{center.x - 75, center.y - 30}, 16, 0.8f, WHITE);
             DrawTextEx(font16, "'T': trace orbit", Vector2{center.x - 75, center.y - 10}, 16, 0.8f, WHITE);
@@ -179,9 +204,13 @@ int main(){
     return 0;
 }
 
+
+// check IsWindowResized()
+
 // web compilation:
 
-// em++ -o game.html src/main.cpp src/Slider.cpp -Os -Wall -I ~/dev/emsdk/upstream/emscripten/cache/sysroot/include \
+// em++ -std=c++20 -o game.html src/main.cpp src/Slider.cpp -Os -Wall \
+-I ~/dev/emsdk/upstream/emscripten/cache/sysroot/include \
 -L ~/dev/emsdk/upstream/emscripten/cache/sysroot/lib/libraylib.a -s USE_GLFW=3 -s ASYNCIFY --preload-file resources \
 --shell-file minshell.html -DPLATFORM_WEB ~/dev/emsdk/upstream/emscripten/cache/sysroot/lib/libraylib.a
 //

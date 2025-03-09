@@ -44,13 +44,13 @@ public:
     int sliderHeight;
     float sliderValue;
     bool isDragging = false;
-    char* name;
+    const char* name;
     Font font16;
     Font font12;
     std::vector<int> codepoints;
 
     Slider(int x, int y);
-    Slider(int x, int y, char* _name);
+    Slider(int x, int y, const char* _name);
     void setRange(float min, float max);
     void logic();
     float getSliderValue();
