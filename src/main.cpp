@@ -4,6 +4,7 @@
 #include "Slider.h"
 #include "Direction.h"
 
+
 int main(){
     InitWindow(1145, 745, "Orbit Explorer");
     SetTargetFPS(60);
@@ -120,7 +121,6 @@ int main(){
         BeginDrawing();
         ClearBackground(BLACK);
 
-
         // controls:
         if (isTracing) {
             if (isRunning) {
@@ -145,12 +145,12 @@ int main(){
         animSlider.draw();
 
         // display measurements:
-        DrawTextEx(font16, TextFormat("Vel: %.2f", Vector2Length(planet.velocity)), Vector2{920, 10}, 16, 0.8f, WHITE); // vel
+        DrawTextEx(font16, TextFormat("Vel: %.2f", Vector2Length(planet.velocity)), Vector2{910, 10}, 16, 0.8f, WHITE); // vel
         DrawTextEx(font16, TextFormat("Min / Max: %.2f / %.2f", minVel, maxVel), Vector2{995, 10}, 16, 0.8f, WHITE); // min/max vel
-        DrawTextEx(font16, TextFormat("Dist: %.2f", Vector2Length(planet.getPosition() - center)), Vector2{920, 30}, 16, 0.8f, WHITE); // dist
+        DrawTextEx(font16, TextFormat("Dist: %.2f", Vector2Length(planet.getPosition() - center)), Vector2{910, 30}, 16, 0.8f, WHITE); // dist
         DrawTextEx(font16, TextFormat("Min / Max: %.2f / %.2f", minDist, maxDist), Vector2{995, 30}, 16, 0.8f, WHITE); // min/max dist
-        DrawTextEx(font16, TextFormat("Current Pos: (%03d, %03d)",  int(planet.getPosition().x), int(planet.getPosition().y)), Vector2{920, 50}, 16, 0.8f, WHITE);
-        DrawTextEx(font16, TextFormat("Start Pos: (%03d, %03d)",  int(planet.startPoint.x), int(planet.startPoint.y)), Vector2{920, 70}, 16, 0.8f, WHITE);
+        DrawTextEx(font16, TextFormat("Current Pos: (%03d, %03d)",  int(planet.getPosition().x), int(planet.getPosition().y)), Vector2{910, 50}, 16, 0.8f, WHITE);
+        DrawTextEx(font16, TextFormat("Start Pos: (%03d, %03d)",  int(planet.startPoint.x), int(planet.startPoint.y)), Vector2{910, 70}, 16, 0.8f, WHITE);
 
         // draw axes:
         DrawLineEx(Vector2{0, height/2}, Vector2{width, height/2}, 1.f, WHITE);
@@ -185,6 +185,12 @@ int main(){
 -L ~/dev/emsdk/upstream/emscripten/cache/sysroot/lib/libraylib.a -s USE_GLFW=3 -s ASYNCIFY --preload-file resources \
 --shell-file minshell.html -DPLATFORM_WEB ~/dev/emsdk/upstream/emscripten/cache/sysroot/lib/libraylib.a
 //
+
+// put this back in to load FT libs
+//-I/opt/homebrew/opt/freetype/include/freetype2 -I/opt/homebrew/opt/libpng/include/libpng16 \
+
+// freetype cflags
+// -I/opt/homebrew/opt/freetype/include/freetype2 -I/opt/homebrew/opt/libpng/include/libpng16
 
 // to run:
   // emrun game.html
